@@ -24,18 +24,24 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Dashboard mahasiswa
-Route::get('/mahasiswa/dashboard', [DashboardController::class, 'mahasiswaDashboard'])
-    ->name('mahasiswa.dashboard')
-    ->middleware('auth', 'role:mahasiswa');
+Route::prefix('mahasiswa')->group(function () {
+    Route::get('dashboard', [MahasiswaController::class, 'dashboard'])->name('mahasiswa.dashboard');
+});
+
+// Will use
+// Route::middleware(['role:mahasiswa'])->group(function () {
+//     Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'dashboard'])->name('mahasiswa.dashboard');
+// });
+
+// Not use
+// Route::get('/mahasiswa/dashboard', [DashboardController::class, 'mahasiswaDashboard'])
+//     ->name('mahasiswa.dashboard')
+//     ->middleware('auth', 'role:mahasiswa');
 
 // Dashboard dosen
 Route::get('/dosen/dashboard', [DashboardController::class, 'dosenDashboard'])
     ->name('dosen.dashboard')
     ->middleware('auth', 'role:dosen');
-
-Route::middleware(['role:mahasiswa'])->group(function () {
-    Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'dashboard'])->name('mahasiswa.dashboard');
-});
 
 Route::middleware(['role:dosen'])->group(function () {
     Route::get('/dosen/dashboard', [DosenController::class, 'dashboard'])->name('dosen.dashboard');
