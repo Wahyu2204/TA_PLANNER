@@ -47,7 +47,7 @@
             <nav id="navmenu" class="navmenu">
                 <ul>
                     <li><a href="/" class="active">Home<br></a></li>
-                    <a class="btn-getstarted" href="/login" style="color: #002645"><i
+                    <a class="btn-getstarted" href="/pilihlogin" style="color: #002645"><i
                             class="fa-solid fa-user-plus mx-2"></i>Sign In</a>
                     <li><a href="/about">About</a></li>
                 </ul>

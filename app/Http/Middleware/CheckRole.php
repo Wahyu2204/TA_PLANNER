@@ -8,22 +8,15 @@ use Illuminate\Support\Facades\Auth;
 
 class CheckRole
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string  $role
-     * @return mixed
-     */
     public function handle(Request $request, Closure $next, $role)
     {
-        // Periksa apakah user sudah login dan memiliki role yang sesuai
-        if (Auth::check() && Auth::user()->role == $role) {
-            return $next($request);
+        $user = Auth::user();
+
+        // Cek apakah pengguna memiliki role yang sesuai
+        if (!$user || $user->role !== $role) {
+            return redirect('/');  // Redirect ke halaman lain jika role tidak sesuai
         }
 
-        // Jika tidak, redirect ke halaman yang sesuai (misalnya login)
-        return redirect('/');
+        return $next($request);
     }
 }
