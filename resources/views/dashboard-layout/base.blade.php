@@ -42,10 +42,9 @@
     />
 
     <link rel="icon" href="{{ asset('assets/rpl.img/5.png') }}" type="image/icon type">
-    <!--end::Third Party Plugin(Bootstrap Icons)-->
-    <!--begin::Required Plugin(AdminLTE)-->
     <link rel="stylesheet" href="{{ asset('assets/css/adminlte') }}/main.min.css" />
-    <!--end::Required Plugin(AdminLTE)-->
+
+    @stack('script-header')
   </head>
   <!--end::Head-->
   <!--begin::Body-->
@@ -105,5 +104,6 @@
         }
       });
     </script>
+    @stack('script-footer')
   </body>
 </html>
