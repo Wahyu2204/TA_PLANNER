@@ -7,7 +7,11 @@
 @section('role', 'Mahasiswa')
 
 @section('content')
-<x-header-content-dashboard head="Dashboard" />
+<x-header-content-dashboard>
+  <ol class="breadcrumb float-sm-end">
+    <li class="breadcrumb-item" aria-current="page">Dashboard</li>
+  </ol>
+</x-header-content-dashboard>
 <x-main-content-dashboard>
   <div class="row mb-4">
     <div class="col-12">

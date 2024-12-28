@@ -15,4 +15,14 @@ class MahasiswaController extends Controller
     {
         return view('mahasiswa.jadwal-bimbingan');
     }
+
+    public function riwayatBimbingan()
+    {
+        return view('mahasiswa.riwayat-bimbingan');
+    }
+
+    public function riwayatBimbinganDetail(Request $request)
+    {
+        return view('mahasiswa.riwayat-bimbingan-detail');
+    }
 }

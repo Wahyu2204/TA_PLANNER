@@ -27,6 +27,9 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::prefix('mahasiswa')->group(function () {
     Route::get('dashboard', [MahasiswaController::class, 'dashboard'])->name('mahasiswa.dashboard');
     Route::get('jadwal-bimbingan', [MahasiswaController::class, 'jadwalBimbingan'])->name('mahasiswa.jadwal-bimbingan');
+    Route::get('riwayat-bimbingan', [MahasiswaController::class, 'riwayatBimbingan'])->name('mahasiswa.riwayat-bimbingan');
+    Route::get('riwayat-bimbingan-detail', [MahasiswaController::class, 'riwayatBimbinganDetail'])->name('mahasiswa.riwayat-bimbingan-detail');
+    
 });
 
 // Will use

@@ -27,8 +27,8 @@
           <li class="nav-header">
             <h4>Pages</h4>
           </li>
-          <li class="nav-item">
-            <a href="./generate/theme.html" class="nav-link">
+          <li class="nav-item {{ request()->getRequestUri() == '/mahasiswa/dashboard' ? 'menu-open' : '' }}">
+            <a href="{{ route('mahasiswa.dashboard') }}" class="nav-link">
               <div class="row">
                 <div class="col-4 d-flex justify-content-center align-items-center">
                   <img src="{{ asset('assets/rpl.img/icon') }}/dashboard.png" alt="Dashboard Icon" class="img-fluid">
@@ -39,8 +39,8 @@
               </div>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="./generate/theme.html" class="nav-link">
+          <li class="nav-item {{ request()->getRequestUri() == '/mahasiswa/jadwal-bimbingan' ? 'menu-open' : '' }}">
+            <a href="{{ route('mahasiswa.jadwal-bimbingan') }}" class="nav-link">
               <div class="row">
                 <div class="col-4 d-flex justify-content-center align-items-center">
                   <img src="{{ asset('assets/rpl.img/icon') }}/schedule.png" alt="Schedule Icon" class="img-fluid">
@@ -51,8 +51,8 @@
               </div>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="./generate/theme.html" class="nav-link">
+          <li class="nav-item {{ request()->getRequestUri() == '/mahasiswa/riwayat-bimbingan' || request()->getRequestUri() == '/mahasiswa/riwayat-bimbingan-detail' ? 'menu-open' : '' }}">
+            <a href="{{ route('mahasiswa.riwayat-bimbingan') }}" class="nav-link">
               <div class="row">
                 <div class="col-4 d-flex justify-content-center align-items-center">
                   <img src="{{ asset('assets/rpl.img/icon') }}/activity history.png" alt="Activity History Icon" class="img-fluid">

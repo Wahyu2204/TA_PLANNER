@@ -8,11 +8,9 @@ use Illuminate\View\Component;
 
 class HeaderContentDashboard extends Component
 {
-    public $head;
-
-    public function __construct($head)
+    public function __construct()
     {
-        $this->head = $head;
+        //
     }
 
     /**
