@@ -23,7 +23,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div id="calendar" style="widows: 80%">
+                            <div id="calendar">
                                 <button type="button" class="btn btn-success mx-auto d-block mt-4"
                                     style="padding: 8px 30px">Pilih Jadwal</button>
                             </div>
@@ -62,9 +62,6 @@
                 </div>
             </div>
         </div>
-        <div class="something d-flex justify-content-center shadow-lg bg-white">
-
-        </div>
     </x-main-content-dashboard>
 @endsection
 
@@ -73,7 +70,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                height: 700,
+                height: 800,
                 headerToolbar: {
                     start: "prev,next today",
                     center: "title",
@@ -81,7 +78,8 @@
                 },
                 selectable: true,
                 dateClick: function(info) {
-                    console.log(info);
+                    console.log(info.dateStr);
+                    
 
                 },
             });

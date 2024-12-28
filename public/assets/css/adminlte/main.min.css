@@ -76,7 +76,7 @@ h5 {font-size: 1rem !important}
 h6 {font-size: 0.80rem !important}
 p {font-size: 1rem !important;}
 #calendar a {color: black;}
-table, th, td {border: 2px solid;border-radius: 4px !important;}
+table, th, td {border: 2px solid;border-radius: 4px;}
 th,td {padding: 1rem !important;}
 .card-body>.table>thead>tr>td, .card-body>.table>thead>tr>th {border-top-width: 2px}
 .table>:not(caption)>*>* {border-bottom-width: 2px}

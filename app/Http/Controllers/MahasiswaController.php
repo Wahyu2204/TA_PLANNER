@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class MahasiswaController extends Controller
 {
     public function dashboard()
@@ -21,8 +19,13 @@ class MahasiswaController extends Controller
         return view('mahasiswa.riwayat-bimbingan');
     }
 
-    public function riwayatBimbinganDetail(Request $request)
+    public function riwayatBimbinganDetail()
     {
         return view('mahasiswa.riwayat-bimbingan-detail');
+    }
+    
+    public function profile()
+    {
+        return view('mahasiswa.profile');
     }
 }

@@ -7,14 +7,29 @@
           <h2 style="margin: 0">TA Planner</h2>
       </div>
     </div>
-    <div class="row p-3">
-      <div class="col-4 d-flex justify-content-center align-items-center">
-        <img src="{{ asset('assets/rpl.img') }}/@yield('pp')" alt="Photo Profile Mahasiswa" width="60px" height="60px">
-      </div>
-      <div class="col-8 text-white">
-          <h4 class="col-12 mb-2">@yield('nama')</h4>
-          <h4 class="col-12" style="opacity: 0.6">@yield('role')</h4>
-      </div>
+    <div class="sidebar-wrapper">
+      <nav>
+        <ul
+              class="nav sidebar-menu flex-column"
+              data-lte-toggle="treeview"
+              role="menu"
+              data-accordion="false"
+            >
+            <li class="nav-item {{ request()->getRequestUri() == '/mahasiswa/profile' ? 'menu-open' : '' }}">
+              <a href="{{ route('mahasiswa.profile') }}" class="nav-link">
+                <div class="row">
+                  <div class="col-4 d-flex justify-content-center align-items-center">
+                    <img src="{{ asset('assets/rpl.img') }}/@yield('pp')" alt="Photo Profile Mahasiswa" width="60px" height="60px">
+                  </div>
+                  <div class="col-8 text-white">
+                      <h4 class="col-12 mb-2">@yield('nama')</h4>
+                      <h4 class="col-12" style="opacity: 0.6">@yield('role')</h4>
+                  </div>
+                </div>
+              </a>
+            </li>
+        </ul>
+      </nav>
     </div>
     <div class="sidebar-wrapper">
       <nav class="mt-2">
