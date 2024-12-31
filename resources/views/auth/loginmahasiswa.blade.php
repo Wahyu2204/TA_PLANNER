@@ -64,11 +64,29 @@
 
                     <div class="d-flex flex-column align-items-center p-5">
                         <img src="assets/rpl.img/5.png" class="img-fluid" alt="" width="50%">
-                        <h1>Sign In</h1>
-                        <p>Rencanakan TA-mu, Wujudkan Mimpimu!</p>
-                        <div class="d-flex justify-content-between align-items-center">
+                        <h1>Sign In Mahasiswa</h1>
+                        <p>according to your role in this university</p>
+
+                        <!-- Form Login -->
+                        <form action="{{ route('login.process') }}" method="POST" class="w-50 mt-4">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required
+                                    placeholder="Masukkan email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" required
+                                    placeholder="Masukkan password">
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Login</button>
+                        </form>
+                        <!-- Akhir Form Login -->
+
+                        {{-- <div class="d-flex justify-content-between align-items-center">
                             <a href="#about" class="btn-get-started scrollto me-3">Get Started</a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

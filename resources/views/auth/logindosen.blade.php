@@ -64,7 +64,7 @@
                     <div class="d-flex flex-column align-items-center p-5">
                         <img src="assets/rpl.img/5.png" class="img-fluid" alt="" width="50%">
                         <h1>Sign In Dosen</h1>
-                        <p>Rencanakan TA-mu, Wujudkan Mimpimu!</p>
+                        <p>according to your role in this university</p>
 
                         <!-- Form Login -->
                         <form action="{{ route('login.process') }}" method="POST" class="w-50 mt-4">
@@ -83,9 +83,9 @@
                         </form>
                         <!-- Akhir Form Login -->
 
-                        <div class="d-flex justify-content-between align-items-center">
+                        {{-- <div class="d-flex justify-content-between align-items-center">
                             <a href="#" type="sumbit" class="btn-get-started scrollto me-3">Get Started</a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
