@@ -1,16 +1,16 @@
 @extends('dashboard-layout.base')
 
-@section('title', 'TA Planner | Riwayat Bimbingan Detail Mahasiswa')
+@section('title', 'TA Planner | Riwayat Bimbingan Detail Dosen')
 
-@section('pp', 'pp mahasiswa.jpeg')
-@section('nama', 'Asep Throttle')
-@section('role', 'Mahasiswa')
+@section('pp', 'pp dosen.jpeg')
+@section('nama', 'Nurhayadi')
+@section('role', 'Dosen')
 
 @section('content')
 <x-header-content-dashboard>
   <ol class="breadcrumb float-sm-end">
     <li class="breadcrumb-item">
-      <a href="{{ route('mahasiswa.riwayat-bimbingan') }}">
+      <a href="{{ route('dosen.riwayat-bimbingan') }}">
         Riwayat Bimbingan
       </a>
     </li>

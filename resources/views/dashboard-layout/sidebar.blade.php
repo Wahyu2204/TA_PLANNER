@@ -1,3 +1,13 @@
+@php
+    $role = 'Dosen';
+    $links = ['dashboard', 'bimbingan', 'riwayat-bimbingan'];
+    $images = ['dashboard', 'schedule', 'activity history'];
+    $uri = request()->getRequestUri();
+    if(str_contains($uri, 'mahasiswa')) {
+        $role = 'Mahasiswa';
+        $links = ['dashboard' , 'jadwal-bimbingan', 'riwayat-bimbingan'];
+    }
+@endphp
 <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark" style="max-width: 280px;background: #002645 !important;">
     <div class="row p-3">
       <div class="col-4 d-flex justify-content-center align-items-center">
@@ -15,7 +25,7 @@
               role="menu"
               data-accordion="false"
             >
-            <li class="nav-item {{ request()->getRequestUri() == '/mahasiswa/profile' ? 'menu-open' : '' }}">
+            <li class="nav-item {{ $uri == '/mahasiswa/profile' ? 'menu-open' : '' }}">
               <a href="{{ route('mahasiswa.profile') }}" class="nav-link">
                 <div class="row">
                   <div class="col-4 d-flex justify-content-center align-items-center">
@@ -31,7 +41,8 @@
         </ul>
       </nav>
     </div>
-    <div class="sidebar-wrapper">
+    <x-sidebar-on-role :$role :$links :$images></x-sidebar-on-role>
+    {{-- <div class="sidebar-wrapper">
       <nav class="mt-2">
         <ul
           class="nav sidebar-menu flex-column"
@@ -42,7 +53,7 @@
           <li class="nav-header">
             <h4>Pages</h4>
           </li>
-          <li class="nav-item {{ request()->getRequestUri() == '/mahasiswa/dashboard' ? 'menu-open' : '' }}">
+          <li class="nav-item {{ $uri == '/mahasiswa/dashboard' ? 'menu-open' : '' }}">
             <a href="{{ route('mahasiswa.dashboard') }}" class="nav-link">
               <div class="row">
                 <div class="col-4 d-flex justify-content-center align-items-center">
@@ -54,14 +65,14 @@
               </div>
             </a>
           </li>
-          <li class="nav-item {{ request()->getRequestUri() == '/mahasiswa/jadwal-bimbingan' ? 'menu-open' : '' }}">
+          <li class="nav-item {{ request()->getRequestUri() == '/mahasiswa/' . ($isDosen ? 'bimbingan' : 'jadwal-bimbingan') ? 'menu-open' : '' }}">
             <a href="{{ route('mahasiswa.jadwal-bimbingan') }}" class="nav-link">
               <div class="row">
                 <div class="col-4 d-flex justify-content-center align-items-center">
                   <img src="{{ asset('assets/rpl.img/icon') }}/schedule.png" alt="Schedule Icon" class="img-fluid">
                 </div>
                 <div class="col-8 d-flex align-items-center">
-                  <h4>Jadwal Bimbingan</h4>
+                  <h4>{{ $isDosen ? 'Bimbingan' : 'Jadwal Bimbingan' }}</h4>
                 </div>
               </div>
             </a>
@@ -81,5 +92,5 @@
           
         </ul>
       </nav>
-    </div>
+    </div> --}}
 </aside>

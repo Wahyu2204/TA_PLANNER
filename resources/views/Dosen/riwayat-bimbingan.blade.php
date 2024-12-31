@@ -1,10 +1,10 @@
 @extends('dashboard-layout.base')
 
-@section('title', 'TA Planner | Riwayat Bimbingan Mahasiswa')
+@section('title', 'TA Planner | Riwayat Bimbingan Dosen')
 
-@section('pp', 'pp mahasiswa.jpeg')
-@section('nama', 'Asep Throttle')
-@section('role', 'Mahasiswa')
+@section('pp', 'pp dosen.jpeg')
+@section('nama', 'Nurhayadi')
+@section('role', 'Dosen')
 
 @section('content')
 <x-header-content-dashboard>
@@ -33,7 +33,7 @@
                   <td>{{ $jb->tempat }}</td>
                   <td>{{ date('H:i', strtotime($jb->waktu)) }}, {{ date('l', strtotime($jb->tanggal)) }} {{ date('d-m-Y', strtotime($jb->tanggal)) }}</td>
                   <td>
-                    <a href="{{ route('mahasiswa.riwayat-bimbingan-detail', ['id' => $jb->id]) }}" type="button" class="btn btn-info mx-auto d-block">Info</a>
+                    <a href="{{ route('dosen.riwayat-bimbingan-detail', ['id' => $jb->id]) }}" type="button" class="btn btn-info mx-auto d-block">Info</a>
                   </td>
                 </tr>
               @endforeach
