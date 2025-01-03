@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\JadwalBimbingan;
 use App\Models\Notifikasi;
+use App\Models\Pesan;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
@@ -23,29 +25,79 @@ class MahasiswaController extends Controller
     public function buatJadwalBimbingan(Request $request)
     {
         $tanggal = $request->tanggal;
+        $mahasiswaId = $request->mahasiswa_id;
+        $dosenId = $request->dosen_id;
+        $buatBaru = $request->buat_baru;
 
-        $jadwalBimbingan = JadwalBimbingan::create([
-           'id_mahasiswa' => 1,
-           'id_dosen' => 1,
-           'tanggal' => $tanggal
-        ]);
+        if (!$buatBaru) {
+            $jadwalBimbingan = JadwalBimbingan::create([
+                'mahasiswa_id' => $mahasiswaId,
+                'dosen_id' => $dosenId,
+                'tanggal' => $tanggal
+            ]);
 
-        if(!$jadwalBimbingan) {
-            $jadwalBimbingan->delete();
-            return response()->json([
-                'message' => 'Terjadi Kesalahan Dalam Pengiriman Data'
-            ], 400);
+            $this->madeNotif($mahasiswaId, $dosenId, 'Jadwal Bimbingan Dibuat', 'Jadwal Pertemuan Bimbingan Berhasil Dikirim dan Dibuat', 'Mahasiswa ' . $jadwalBimbingan->mahasiswa->name . ' Membuat Jadwal Pertemuan Bimbingan');
+
+            if (!$jadwalBimbingan) {
+                $jadwalBimbingan->delete();
+
+                $this->deleteNotif($mahasiswaId, $dosenId);
+
+                return response()->json([
+                    'message' => 'Terjadi Kesalahan Dalam Pengiriman Data'
+                ], 400);
+            }
+        } else {
+            $jadwalBimbingan = JadwalBimbingan::where([
+                'mahasiswa_id' => $mahasiswaId,
+                'buat_baru' => 1
+            ]);
+
+            $namaMahasiswa = $jadwalBimbingan->get()[0]->mahasiswa->name;
+            $alasan = $jadwalBimbingan->get()[0]->alasan;
+            $tanggalPrev = $jadwalBimbingan->get()[0]->tanggal;
+
+            $jadwalBimbingan->update([
+                'alasan' => null,
+                'hari_pilihan_dosen' => null,
+                'tanggal' => $tanggal,
+                'buat_baru' => 0,
+                'ditolak' => 0,
+                'created_at' => now()
+            ]);
+
+            $this->madeNotif($mahasiswaId, $dosenId, 'Perubahan Jadwal Bimbingan', 'Jadwal Pertemuan yang Sebelumnya Ditolak telah Diubah dan Dikirim Kembali', 'Mahasiswa ' . $namaMahasiswa . ' Mengganti Jadwal Pertemuan yang Sebelumnya Ditolak');
+
+            if (!$jadwalBimbingan) {
+                $jadwalBimbingan->update([
+                    'buat_baru' => 1,
+                    'ditolak' => 1,
+                    'alasan' => $alasan,
+                    'tanggal' => $tanggalPrev
+                ]);
+
+                $this->deleteNotif($mahasiswaId, $dosenId);
+
+                return response()->json([
+                    'message' => 'Terjadi Kesalahan Dalam Pengiriman Data'
+                ], 400);
+            }
         }
-        
-        Notifikasi::create([
-            'id_mahasiswa' => 1,
-            'judul' => 'Jadwal Bimbingan',
-            'pesan' => 'Jadwal Pertemuan Bimbingan Berhasil Dikirim dan Dibuat'
-        ]);
 
         return response()->json([
             'message' => 'Berhasil!'
         ], 200);
+    }
+
+    public function baruJadwalBimbingan($id)
+    {
+        JadwalBimbingan::find($id)->update([
+            'buat_baru' => 1
+        ]);
+
+        return response()->json([
+            'message' => 'Berhasil!'
+        ]);
     }
 
     public function riwayatBimbingan()
@@ -58,10 +110,5 @@ class MahasiswaController extends Controller
     {
         $jadwalBimbingan = JadwalBimbingan::find($id);
         return view('mahasiswa.riwayat-bimbingan-detail', ['jadwalBimbingan' => $jadwalBimbingan]);
-    }
-    
-    public function profile()
-    {
-        return view('mahasiswa.profile');
     }
 }

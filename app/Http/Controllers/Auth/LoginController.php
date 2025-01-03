@@ -5,10 +5,21 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class LoginController extends Controller
 {
-    //
+    public function showLoginForm()
+    {
+        return view('auth.loginmahasiswa');
+    }
+
+    public function showLoginDosenForm()
+    {
+        return view('auth.logindosen'); // Pastikan file `logindosen.blade.php` ada.
+    }
+
     public function login(Request $request)
     {
         $request->validate([
@@ -16,10 +27,11 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($request->only('email', 'password'), $request->remember)) {
-            $user = Auth::user();
+        $user = User::where('email', $request->email)->first();
 
-            // Arahkan pengguna berdasarkan peran
+        if ($user && Hash::check($request->password, $user->password)) {
+            Auth::login($user);
+
             if ($user->role === 'mahasiswa') {
                 return redirect()->route('mahasiswa.dashboard');
             } elseif ($user->role === 'dosen') {
@@ -30,5 +42,19 @@ class LoginController extends Controller
         return back()->withErrors([
             'email' => 'Email atau password salah.',
         ])->withInput($request->only('email'));
+    }
+
+    public function logout()
+    {
+        if(Auth::logout()) {
+            return response()->json([
+                'message' => 'Gagal!' 
+            ],400);
+        }
+
+        return response()->json([
+            'message' => 'Berhasil!'
+        ], 200);
+
     }
 }

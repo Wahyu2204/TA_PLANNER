@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('jadwal_bimbingan', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('id_mahasiswa');
-            $table->unsignedInteger('id_dosen');
+            $table->foreignId('mahasiswa_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('dosen_id')->references('id')->on('users')->onDelete('cascade');
             $table->time('waktu')->nullable();
             $table->date('tanggal')->nullable();
             $table->string('alasan')->nullable();
@@ -24,6 +24,7 @@ return new class extends Migration
             $table->boolean('diterima')->default(0);
             $table->boolean('selesai')->default(0);
             $table->boolean('ditolak')->default(0);
+            $table->boolean('buat_baru')->default(0);
             $table->timestamps();
         });
     }

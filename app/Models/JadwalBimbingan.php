@@ -13,7 +13,15 @@ class JadwalBimbingan extends Model
     protected $table = 'jadwal_bimbingan';
 
     protected $fillable = [
-        'id_mahasiswa', 'id_dosen', 'tanggal', 'waktu', 'tempat', 'umpan_balik', 'alasan', 'hari_pilihan_dosen', 'diterima', 'selesai', 'ditolak'
+        'mahasiswa_id', 'dosen_id', 'tanggal', 'waktu', 'tempat', 'umpan_balik', 'alasan', 'hari_pilihan_dosen', 'diterima', 'selesai', 'ditolak', 'buat_baru'
     ];
+
+    public function mahasiswa() {
+        return $this->belongsTo(User::class, 'mahasiswa_id', 'id');
+    }
+
+    public function dosen() {
+        return $this->belongsTo(User::class, 'dosen_id', 'id');
+    }
 }
 

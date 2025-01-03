@@ -1,10 +1,8 @@
-@extends('dashboard-layout.base')
+@extends('layouts.dashboard.base')
 
 @section('title', 'TA Planner | Dashboard Mahasiswa')
 
 @section('pp', 'pp mahasiswa.jpeg')
-@section('nama', 'Asep Throttle')
-@section('role', 'Mahasiswa')
 
 @section('content')
 <x-header-content-dashboard>

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('notifikasi', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('id_mahasiswa');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('judul');
             $table->string('pesan');
             $table->timestamps();

@@ -1,10 +1,8 @@
-@extends('dashboard-layout.base')
+@extends('layouts.dashboard.base')
 
 @section('title', 'TA Planner | Dashboard Dosen')
 
 @section('pp', 'pp dosen.jpeg')
-@section('nama', 'Nurhayadi')
-@section('role', 'Dosen')
 
 @section('content')
 <x-header-content-dashboard>
@@ -24,11 +22,11 @@
                     <tbody id="tbody">
                       <tr>
                         <th style="width: 12rem;">Nama Mahasiswa</th>
-                        <td>{{ $jb->id_mahasiswa }}</td>
+                        <td>{{ $jb->mahasiswa->name }}</td>
                       </tr>
                       <tr>
                         <th>Nama Dosen</th>
-                        <td>{{ $jb->id_dosen }}</td>
+                        <td>{{ $jb->dosen->name }}</td>
                       </tr>
                       <tr>
                         <th>Tanggal Pertemuan</th>
@@ -88,6 +86,7 @@
     <script>
       let link;
       let data;
+      let pesan;
 
       const tbody = document.getElementById('tbody')
       const btnTerima = document.getElementById('btn-terima')
@@ -147,17 +146,23 @@
           link = '{!! route('dosen.bimbingan-acc-terima', ["id" => $jb->id]) !!}'
           data = JSON.stringify({
             waktu: fieldWaktu.children[1].children[0].value,
-            tempat: fieldTempat.children[1].children[0].value
+            tempat: fieldTempat.children[1].children[0].value,
+            mahasiswa_id: '{!! $jb->mahasiswa->id !!}',
+            dosen_id: '{!! $jb->dosen->id !!}'
           })
+          pesan = 'Anda Menerima Jadwal Bimbingan'
         } else {
           link = '{!! route('dosen.bimbingan-acc-tolak', ["id" => $jb->id]) !!}'
           data = JSON.stringify({
             alasan: fieldAlasan.children[1].children[0].value,
-            hariPilihanDosen: fieldPilihan.children[1].children[0].value
+            hariPilihanDosen: fieldPilihan.children[1].children[0].value,
+            mahasiswa_id: '{!! $jb->mahasiswa->id !!}',
+            dosen_id: '{!! $jb->dosen->id !!}'
           })
+          pesan = 'Anda Menolak Jadwal Bimbingan'
         }
         
-        postFetch(link, '{!! route('dosen.bimbingan') !!}', data)
+        postFetch(link, '{!! route('dosen.bimbingan') !!}', data, pesan)
       }
     </script>
 @endpush

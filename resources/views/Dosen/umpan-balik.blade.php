@@ -1,10 +1,8 @@
-@extends('dashboard-layout.base')
+@extends('layouts.dashboard.base')
 
 @section('title', 'TA Planner | Umpan Balik Dosen')
 
 @section('pp', 'pp dosen.jpeg')
-@section('nama', 'Nurhayadi')
-@section('role', 'Dosen')
 
 @section('content')
 <x-header-content-dashboard>
@@ -24,11 +22,11 @@
                     <tbody id="tbody">
                       <tr>
                         <th style="width: 12rem;">Nama Mahasiswa</th>
-                        <td>{{ $jb->id_mahasiswa }}</td>
+                        <td>{{ $jb->mahasiswa->name }}</td>
                       </tr>
                       <tr>
                         <th>Nama Dosen</th>
-                        <td>{{ $jb->id_dosen }}</td>
+                        <td>{{ $jb->dosen->name }}</td>
                       </tr>
                       <tr>
                         <th>Tanggal Pengajuan</th>
@@ -75,9 +73,11 @@
 
     function feedback() {
       const data = JSON.stringify({
-        umpan_balik: umpanBalik.value
+        umpan_balik: umpanBalik.value,
+        mahasiswa_id: '{!! $jb->mahasiswa->id !!}',
+        dosen_id: '{!! $jb->dosen->id !!}'
       })
-      postFetch('{!! route('dosen.kirim-umpan-balik', ["id" => $jb->id]) !!}', '{!! route('dosen.riwayat-bimbingan') !!}', data)
+      postFetch('{!! route('dosen.kirim-umpan-balik', ["id" => $jb->id]) !!}', '{!! route('dosen.riwayat-bimbingan') !!}', data, 'Anda Memberikan Umpan Balik')
     }
   </script>
 @endpush

@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\GeneralController;
+use Cloudinary\Transformation\Rotate;
 
 Route::get('/', function () {
     return view('index');
@@ -15,28 +16,47 @@ Route::get('/about', function () {
 });
 
 Route::get('/login', function () {
-    return view('login');
-});
+    return view('pilihlogin');
+})->name('login');
 
 // Halaman login
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+// Rute untuk menampilkan form login mahasiswa
+Route::get('/login/mahasiswa', [LoginController::class, 'showLoginForm'])->name('login.mahasiswa');
+
+// Rute untuk menampilkan form login dosen
+Route::get('/login/dosen', [LoginController::class, 'showLoginDosenForm'])->name('login.dosen');
+
+// Rute untuk proses login
+Route::post('/login', [LoginController::class, 'login'])->name('login.process');
+
+// Rute untuk logout
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::middleware('auth')->group(function () {
+    Route::get('profile/{id}', [GeneralController::class, 'profile'])->name('profile');
+
+    Route::get('/notifikasi/{id}', [GeneralController::class, 'notifikasi'])->name('notifikasi');
+
+    Route::post('/pesan/{from}', [GeneralController::class, 'pesan'])->name('pesan');
+    Route::post('/pesan/{from}/kirim', [GeneralController::class, 'kirimPesan'])->name('kirim-pesan');
+
+    Route::post('/ganti-pp/{id}', [GeneralController::class, 'gantiPP'])->name('ganti-pp');
+});
+
 
 // Dashboard mahasiswa
-Route::prefix('mahasiswa')->group(function () {
+Route::prefix('mahasiswa')->middleware(['auth', 'checkRole:mahasiswa'])->group(function () {
     Route::get('dashboard', [MahasiswaController::class, 'dashboard'])->name('mahasiswa.dashboard');
 
     Route::get('jadwal-bimbingan', [MahasiswaController::class, 'jadwalBimbingan'])->name('mahasiswa.jadwal-bimbingan');
     Route::post('jadwal-bimbingan', [MahasiswaController::class, 'buatJadwalBimbingan'])->name('mahasiswa.buat-jadwal-bimbingan');
+    Route::post('jadwal-bimbingan/baru/{id}', [MahasiswaController::class, 'baruJadwalBimbingan'])->name('mahasiswa.baru-jadwal-bimbingan');
 
     Route::get('riwayat-bimbingan', [MahasiswaController::class, 'riwayatBimbingan'])->name('mahasiswa.riwayat-bimbingan');
     Route::get('riwayat-bimbingan/detail/{id}', [MahasiswaController::class, 'riwayatBimbinganDetail'])->name('mahasiswa.riwayat-bimbingan-detail');
-
-    Route::get('profile', [MahasiswaController::class, 'profile'])->name('mahasiswa.profile');
 });
 
-Route::prefix('dosen')->group(function () {
+Route::prefix('dosen')->middleware(['auth', 'checkRole:dosen'])->group(function () {
     Route::get('dashboard', [DosenController::class, 'dashboard'])->name('dosen.dashboard');
 
     Route::get('bimbingan', [DosenController::class, 'bimbingan'])->name('dosen.bimbingan');
@@ -50,23 +70,6 @@ Route::prefix('dosen')->group(function () {
 
     Route::get('riwayat-bimbingan', [DosenController::class, 'riwayatBimbingan'])->name('dosen.riwayat-bimbingan');
     Route::get('riwayat-bimbingan/detail/{id}', [DosenController::class, 'riwayatBimbinganDetail'])->name('dosen.riwayat-bimbingan-detail');
+
+    Route::get('pengirim-pesan/{id}', [DosenController::class, 'getAllUserKirim'])->name('dosen.pengirim-pesan');
 });
-
-// Will use
-// Route::middleware(['role:mahasiswa'])->group(function () {
-//     Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'dashboard'])->name('mahasiswa.dashboard');
-// });
-
-// Not use
-// Route::get('/mahasiswa/dashboard', [DashboardController::class, 'mahasiswaDashboard'])
-//     ->name('mahasiswa.dashboard')
-//     ->middleware('auth', 'role:mahasiswa');
-
-// Dashboard dosen
-// Route::get('/dosen/dashboard', [DashboardController::class, 'dosenDashboard'])
-//     ->name('dosen.dashboard')
-//     ->middleware('auth', 'role:dosen');
-
-// Route::middleware(['role:dosen'])->group(function () {
-//     Route::get('/dosen/dashboard', [DosenController::class, 'dashboard'])->name('dosen.dashboard');
-// });

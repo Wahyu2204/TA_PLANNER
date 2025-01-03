@@ -12,6 +12,6 @@ class Notifikasi extends Model
     protected $table = 'notifikasi';
 
     protected $fillable = [
-        'id_mahasiswa', 'judul', 'pesan'
+        'user_id', 'judul', 'pesan'
     ];
 }

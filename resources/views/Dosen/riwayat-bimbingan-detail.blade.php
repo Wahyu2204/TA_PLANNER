@@ -1,10 +1,8 @@
-@extends('dashboard-layout.base')
+@extends('layouts.dashboard.base')
 
 @section('title', 'TA Planner | Riwayat Bimbingan Detail Dosen')
 
 @section('pp', 'pp dosen.jpeg')
-@section('nama', 'Nurhayadi')
-@section('role', 'Dosen')
 
 @section('content')
 <x-header-content-dashboard>
@@ -27,11 +25,11 @@
                 <tbody>
                   <tr>
                     <th style="width: 12rem;">Nama Mahasiswa</th>
-                    <td>{{ $jadwalBimbingan->id_mahasiswa }}</td>
+                    <td>{{ $jadwalBimbingan->mahasiswa->name }}</td>
                   </tr>
                   <tr>
                     <th>Nama Dosen</th>
-                    <td>{{ $jadwalBimbingan->id_dosen }}</td>
+                    <td>{{ $jadwalBimbingan->dosen->name }}</td>
                   </tr>
                   <tr>
                     <th>Tanggal Pengajuan</th>
@@ -43,7 +41,7 @@
                   </tr>
                   <tr>
                     <th>Waktu</th>
-                    <td>{{ date('H:i', strtotime($jadwalBimbingan->waktu)) }} WIB</td>
+                    <td>{{ date('H:i', strtotime($jadwalBimbingan->waktu)) }}</td>
                   </tr>
                   <tr>
                     <th>Tempat</th>

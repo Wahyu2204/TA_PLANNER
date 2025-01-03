@@ -1,10 +1,8 @@
-@extends('dashboard-layout.base')
+@extends('layouts.dashboard.base')
 
 @section('title', 'TA Planner | Dashboard Dosen')
 
 @section('pp', 'pp dosen.jpeg')
-@section('nama', 'Nurhayadi')
-@section('role', 'Dosen')
 
 @section('content')
 <x-header-content-dashboard>
@@ -38,7 +36,7 @@
                 <div class="row">
                     <div class="col">
                         <h1 style="font-weight: bold">Jumlah Bimbingan</h1>
-                        <p style="font-weight: bold;font-size:8rem !important;">10</p>
+                        <p style="font-weight: bold;font-size:8rem !important;">{{ $jm }}</p>
                         <p>Mahasiswa</p>
                     </div>
                     <div class="" style="width: 14rem">
