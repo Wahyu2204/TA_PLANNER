@@ -16,6 +16,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'photo_profile'
     ];
 
     /**
@@ -34,5 +35,13 @@ class User extends Authenticatable
         return $this->role === 'dosen';
     }
 
-    // Metode lain ...
+    public function relatedMahasiswa()
+    {
+        return $this->belongsToMany(User::class, 'mahasiswa_dosen', 'dosen_id', 'mahasiswa_id');
+    }
+    
+    public function relatedDosen()
+    {
+        return $this->belongsToMany(User::class, 'mahasiswa_dosen', 'mahasiswa_id', 'dosen_id');
+    }
 }

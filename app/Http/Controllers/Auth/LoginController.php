@@ -46,7 +46,15 @@ class LoginController extends Controller
 
     public function logout()
     {
-        Auth::logout();
-        return redirect()->route('login');
+        if(Auth::logout()) {
+            return response()->json([
+                'message' => 'Gagal!' 
+            ],400);
+        }
+
+        return response()->json([
+            'message' => 'Berhasil!'
+        ], 200);
+
     }
 }

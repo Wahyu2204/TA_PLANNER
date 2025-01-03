@@ -1,10 +1,8 @@
-@extends('dashboard-layout.base')
+@extends('layouts.dashboard.base')
 
 @section('title', 'TA Planner | Riwayat Bimbingan Detail Mahasiswa')
 
 @section('pp', 'pp mahasiswa.jpeg')
-@section('nama', 'Asep Throttle')
-@section('role', 'Mahasiswa')
 
 @section('content')
 <x-header-content-dashboard>
@@ -27,34 +25,34 @@
                 <tbody>
                   <tr>
                     <th style="width: 12rem;">Nama Mahasiswa</th>
-                    <td>Asep Throttle</td>
+                    <td>{{ $jadwalBimbingan->mahasiswa->name }}</td>
                   </tr>
                   <tr>
                     <th>Nama Dosen</th>
-                    <td>Nurhayadi</td>
+                    <td>{{ $jadwalBimbingan->dosen->name }}</td>
                   </tr>
                   <tr>
                     <th>Tanggal Pengajuan</th>
-                    <td>08:00, Jumat 07/09/2024</td>
+                    <td>{{ date('H:i', strtotime($jadwalBimbingan->created_at)) }}, {{ date('l', strtotime($jadwalBimbingan->created_at)) }} {{ date('d-m-Y', strtotime($jadwalBimbingan->created_at)) }}</td>
                   </tr>
                   <tr>
                     <th>Tanggal Pertemuan</th>
-                    <td>Senin, 10/09/2024</td>
+                    <td>{{ date('H:i', strtotime($jadwalBimbingan->waktu)) }}, {{ date('l', strtotime($jadwalBimbingan->tanggal)) }} {{ date('d-m-Y', strtotime($jadwalBimbingan->tanggal)) }}</td>
                   </tr>
                   <tr>
                     <th>Waktu</th>
-                    <td>08:30 WIB</td>
+                    <td>{{ date('H:i', strtotime($jadwalBimbingan->waktu)) }}</td>
                   </tr>
                   <tr>
                     <th>Tempat</th>
-                    <td>Kampus B, Ruang 201</td>
+                    <td>{{ $jadwalBimbingan->tempat }}</td>
                   </tr>
                   <tr>
                     <th>Umpan Balik</th>
-                    <td>Perhatikan Pemilihan Kata pada BAB 2 dan 3 </td>
+                    <td>{{ $jadwalBimbingan->umpan_balik }}</td>
                   </tr>
                 </tbody>
-              </table>
+            </table>
         </div>
       </div>
     </div>

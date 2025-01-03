@@ -1,10 +1,8 @@
-@extends('dashboard-layout.base')
+@extends('layouts.dashboard.base')
 
 @section('title', 'TA Planner | Dashboard Mahasiswa')
 
 @section('pp', 'pp mahasiswa.jpeg')
-@section('nama', 'Asep Throttle')
-@section('role', 'Mahasiswa')
 
 @section('content')
 <x-header-content-dashboard>
@@ -40,14 +38,34 @@
             <div class="d-flex align-items-center justify-content-end" style="height: 100%;width: 100%;background: #37CF29;">
               <h4 style="margin-right: 20px">15 Apr 2024</h4>
             </div>
-            <div class="d-flex align-items-center" style="height: 100%;position: absolute;left: 0;top: 0;width: 75%;background: #CF2929;border-top-right-radius: 20px;border-bottom-right-radius: 20px;">
+            <div id="progress-bar" class="d-flex align-items-center" style="height: 100%;position: absolute;left: 0;top: 0;background: #CF2929;border-top-right-radius: 20px;border-bottom-right-radius: 20px;">
               <h4 style="margin-left: 20px">15 Jan 2024</h4>
             </div>
           </div>
-          <h4>Waktu tersisa 6 bulan lagi!</h4>
+          <h4 id="progress-info"></h4>
         </div>
       </div>
     </div>
   </div>
 </x-main-content-dashboard>
 @endsection
+
+@push('script-footer')
+  <script>
+    const progressBar = document.getElementById('progress-bar')
+    const progressInfo = document.getElementById('progress-info')
+
+    const startDate = new Date('2024-12-30'); 
+    const endDate = new Date('2025-12-30'); 
+
+    const now = new Date(); 
+    const totalDuration = endDate - startDate;
+    const elapsedDuration = now - startDate; 
+
+    const months = endDate.getMonth() - startDate.getMonth() + (12 * (endDate.getFullYear() - startDate.getFullYear()));
+
+    let progress = Math.min((elapsedDuration / totalDuration) * 100, 100);
+    progressBar.style.width = progress
+    progressInfo.textContent = `Waktu tersisa ${months} bulan lagi!`
+  </script>
+@endpush
