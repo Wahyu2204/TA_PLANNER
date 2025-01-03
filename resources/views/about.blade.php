@@ -4,12 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Index - HeroBiz Bootstrap Template</title>
+    <title>About - TA Planner</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
 
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
+    <link href="{{ asset('assets/rpl.img/5.png') }}" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -185,17 +185,17 @@
                 <!-- Top Row: Product Owner & Scrum Master -->
                 <div class="row justify-content-center">
                     <div class="col-lg-3 col-md-6">
-                        <div class="team-member">
-                            <img src="assets/rpl.img/team1.jpg" class="img-fluid" alt="">
-                            <h4>John Doe</h4>
+                        <div class="team-member text-center">
+                            <img src="{{ asset('assets/rpl.img/12.jpg') }}" class="img-fluid shadow p-3 mb-3 bg-body-tertiary" alt="">
+                            <h4>Siti Rohiman</h4>
                             <p>Product Owner</p>
                         </div>
                     </div>
 
                     <div class="col-lg-3 col-md-6">
-                        <div class="team-member">
-                            <img src="assets/rpl.img/team2.jpg" class="img-fluid" alt="">
-                            <h4>Jane Smith</h4>
+                        <div class="team-member text-center">
+                            <img src="{{ asset('assets/rpl.img/18.jpg') }}" class="img-fluid shadow p-3 mb-3 bg-body-tertiary" alt="">
+                            <h4>M. Asyam Al Farisi</h4>
                             <p>Scrum Master</p>
                         </div>
                     </div>
@@ -204,26 +204,26 @@
                 <!-- Middle Row: Development -->
                 <div class="row justify-content-center mt-4">
                     <div class="col-lg-3 col-md-6">
-                        <div class="team-member">
-                            <img src="assets/rpl.img/team3.jpg" class="img-fluid" alt="">
-                            <h4>Michael Brown</h4>
-                            <p>Frontend Developer</p>
+                        <div class="team-member text-center">
+                            <img src="{{ asset('assets/rpl.img/14.jpg') }}" class="img-fluid shadow p-3 mb-3 bg-body-tertiary" alt="">
+                            <h4>Wahyu A. Wibowo</h4>
+                            <p>Development</p>
                         </div>
                     </div>
 
                     <div class="col-lg-3 col-md-6">
-                        <div class="team-member">
-                            <img src="assets/rpl.img/team4.jpg" class="img-fluid" alt="">
-                            <h4>Emily Davis</h4>
-                            <p>Backend Developer</p>
+                        <div class="team-member text-center">
+                            <img src="{{ asset('assets/rpl.img/15.jpg') }}" class="img-fluid shadow p-3 mb-3 bg-body-tertiary" alt="">
+                            <h4>Safhan Farizi</h4>
+                            <p>Development</p>
                         </div>
                     </div>
 
                     <div class="col-lg-3 col-md-6">
-                        <div class="team-member">
-                            <img src="assets/rpl.img/team5.jpg" class="img-fluid" alt="">
-                            <h4>Chris Wilson</h4>
-                            <p>Full Stack Developer</p>
+                        <div class="team-member text-center">
+                            <img src="{{ asset('assets/rpl.img/16.jpg') }}" class="img-fluid shadow p-3 mb-3 bg-body-tertiary" alt="">
+                            <h4>M. Yuking Niqobal H.</h4>
+                            <p>Development</p>
                         </div>
                     </div>
                 </div>
@@ -231,18 +231,18 @@
                 <!-- Bottom Row: Creative Media -->
                 <div class="row justify-content-center mt-4">
                     <div class="col-lg-3 col-md-6">
-                        <div class="team-member">
-                            <img src="assets/rpl.img/team6.jpg" class="img-fluid" alt="">
-                            <h4>Sarah Johnson</h4>
-                            <p>Graphic Designer</p>
+                        <div class="team-member text-center">
+                            <img src="{{ asset('assets/rpl.img/13.jpg') }}" class="img-fluid shadow p-3 mb-3 bg-body-tertiary" alt="">
+                            <h4>Satria Tri F.</h4>
+                            <p>Creative Media</p>
                         </div>
                     </div>
 
                     <div class="col-lg-3 col-md-6">
-                        <div class="team-member">
-                            <img src="assets/rpl.img/team7.jpg" class="img-fluid" alt="">
-                            <h4>Tom Lee</h4>
-                            <p>Video Editor</p>
+                        <div class="team-member text-center">
+                            <img src="{{ asset('assets/rpl.img/17.jpg') }}" class="img-fluid shadow p-3 mb-3 bg-body-tertiary" alt="">
+                            <h4>Fahdan Z. Al Sauqi</h4>
+                            <p>Creative Media</p>
                         </div>
                     </div>
                 </div>
