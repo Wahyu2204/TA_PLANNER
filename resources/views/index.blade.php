@@ -11,7 +11,7 @@
                 <img src="{{ asset('assets/rpl.img/1.png') }}" class="img-fluid animated" alt="" width="20%">
 
                 <div class="d-flex flex-column justify-content-center align-items-center"
-                    style="position: relative; top: -100px;">
+                    style="position: relative; top: -100px; margin-right: 52px;">
                     <img src="{{ asset('assets/rpl.img/5.png') }}" class="img-fluid animated" alt="" width="20%">
                     <h1>TA Planner</h1>
                     <p>Rencanakan TA-mu, Wujudkan Mimpimu!</p>
@@ -130,7 +130,7 @@
         </div>
         <!-- End Section Title -->
 
-        <div class="container" data-aos="fade">
+        <div class="container" data-aos="fade-up">
 
             <div class="row gy-5 gx-lg-5">
 
