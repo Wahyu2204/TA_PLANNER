@@ -49,29 +49,6 @@ Route::middleware('auth')->group(function () {
     Route::get('kirim-email/{id}', [GeneralController::class, 'kirimEmail'])->name('kirim-email');
 });
 
-Route::get('email', function() {
-    $user = User::find(2);
-    $jadwalBimbingan = JadwalBimbingan::where('mahasiswa_id', $user->id)->latest()->first();
-
-    return view('gmail.pertemuan', [
-        'name' => $user->name,
-        'jadwalBimbingan' => $jadwalBimbingan
-    ]);
-});
-
-Route::get('coba', function() {
-    return view('coba');
-});
-
-Route::get('/test-mail', function (){
-    $user = User::find(2);
-    $jadwalBimbingan = JadwalBimbingan::where('mahasiswa_id', $user->id)->latest()->first();
-
-    Notification::route('mail', 'taylor@example.com')->notify(new SendEmail($user->name, 'Jadwal Bimbingan', $jadwalBimbingan));
-    return 'Sent';
-});
-
-
 // Dashboard mahasiswa
 Route::prefix('mahasiswa')->middleware(['auth', 'checkRole:mahasiswa'])->group(function () {
     Route::get('dashboard', [MahasiswaController::class, 'dashboard'])->name('mahasiswa.dashboard');

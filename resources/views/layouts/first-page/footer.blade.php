@@ -37,7 +37,7 @@
     <div class="copyright text-center">
         <div class="container d-flex flex-column flex-lg-row justify-content-center align-items-center">
             <div>
-                © Copyright 2024 All Rights Reserved | This template is made with by <a
+                © Copyright 2024 All Rights Reserved | Created with passion by <a
                     href="https://bootstrapmade.com/">TA Planner</a>
             </div>
 
