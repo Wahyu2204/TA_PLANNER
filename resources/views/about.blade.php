@@ -1,4 +1,4 @@
-@extends('layouts.first-page.baseabout')
+@extends('layouts.first-page.base')
 
 @section('title', 'TA Planner | About Page')
 
