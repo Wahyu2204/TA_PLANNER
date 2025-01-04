@@ -21,13 +21,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'Asep Throttle',
+            'name' => 'Ahmad Kastelo',
             'tanggal_lahir' => date('Y-m-d', strtotime('01-01-2005')),
             'photo_profile' => 'https://res.cloudinary.com/dp4xckrqy/image/upload/v1735812789/uqzqe1gpslbrh4vkshm5.jpg',
             'program_studi' => 'Teknik Informatika',
             'kelas' => '23TI01',
             'no_telp' => '089911223344',
-            'email' => 'm@gmail.com',
+            'email' => 'bestincrease@spamsandwich.com',
             'password' => Hash::make('m'),
             'role' => 'mahasiswa'
         ]);

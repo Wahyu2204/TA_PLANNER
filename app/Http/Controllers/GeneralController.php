@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\MailSend;
+use App\Models\JadwalBimbingan;
 use App\Models\Notifikasi;
 use App\Models\Pesan;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class GeneralController extends Controller
 {
@@ -96,5 +99,13 @@ class GeneralController extends Controller
         ]);
 
         return redirect()->back();
+    }
+
+    public function kirimEmail($id) {
+        $user = User::find($id);
+
+        $jadwalBimbingan = JadwalBimbingan::where('mahasiswa_id', $id)->latest()->first();
+
+        Mail::to($user->email)->send(new MailSend($user->name, 'Jadwal Bimbingan', $jadwalBimbingan));
     }
 }

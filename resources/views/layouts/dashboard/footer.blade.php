@@ -6,3 +6,8 @@
     </strong>
     All rights reserved.
 </footer>
+<button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
+    <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
+    <button onclick="makeEvent()">Buat Event</button>
+
+    <pre id="content" style="white-space: pre-wrap;"></pre>

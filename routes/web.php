@@ -5,7 +5,11 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\GeneralController;
+use App\Models\JadwalBimbingan;
+use App\Models\User;
+use App\Notifications\SendEmail;
 use Cloudinary\Transformation\Rotate;
+use Illuminate\Support\Facades\Notification;
 
 Route::get('/', function () {
     return view('index');
@@ -37,10 +41,34 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/notifikasi/{id}', [GeneralController::class, 'notifikasi'])->name('notifikasi');
 
-    Route::post('/pesan/{from}', [GeneralController::class, 'pesan'])->name('pesan');
-    Route::post('/pesan/{from}/kirim', [GeneralController::class, 'kirimPesan'])->name('kirim-pesan');
+    Route::post('pesan/{from}', [GeneralController::class, 'pesan'])->name('pesan');
+    Route::post('pesan/{from}/kirim', [GeneralController::class, 'kirimPesan'])->name('kirim-pesan');
 
-    Route::post('/ganti-pp/{id}', [GeneralController::class, 'gantiPP'])->name('ganti-pp');
+    Route::post('ganti-pp/{id}', [GeneralController::class, 'gantiPP'])->name('ganti-pp');
+
+    Route::get('kirim-email/{id}', [GeneralController::class, 'kirimEmail'])->name('kirim-email');
+});
+
+Route::get('email', function() {
+    $user = User::find(2);
+    $jadwalBimbingan = JadwalBimbingan::where('mahasiswa_id', $user->id)->latest()->first();
+
+    return view('gmail.pertemuan', [
+        'name' => $user->name,
+        'jadwalBimbingan' => $jadwalBimbingan
+    ]);
+});
+
+Route::get('coba', function() {
+    return view('coba');
+});
+
+Route::get('/test-mail', function (){
+    $user = User::find(2);
+    $jadwalBimbingan = JadwalBimbingan::where('mahasiswa_id', $user->id)->latest()->first();
+
+    Notification::route('mail', 'taylor@example.com')->notify(new SendEmail($user->name, 'Jadwal Bimbingan', $jadwalBimbingan));
+    return 'Sent';
 });
 
 

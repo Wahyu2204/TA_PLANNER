@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\JadwalBimbingan;
-use App\Models\Notifikasi;
-use App\Models\Pesan;
 use App\Models\User;
+use App\Notifications\SendEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class DosenController extends Controller
 {
@@ -41,6 +41,7 @@ class DosenController extends Controller
         $mahasiswaId = $request->mahasiswa_id;
         $dosenId = $request->dosen_id;
 
+        $user = User::find($mahasiswaId);
         $jadwalBimbingan = JadwalBimbingan::find($id);
 
         $jadwalBimbingan->update([
@@ -51,6 +52,8 @@ class DosenController extends Controller
 
         $this->madeNotif($mahasiswaId, $dosenId, 'Jadwal Bimbingan Diterima', 'Dosen telah Menyetujui Jadwal Bimbingan Anda', 'Anda Menyetujui Jadwal Bimbingan ' . $jadwalBimbingan->mahasiswa->name);
         
+        $user->notify(new SendEmail($user->name, 'Jadwal Bimbingan', $jadwalBimbingan));
+
         if(!$jadwalBimbingan) {
             $jadwalBimbingan->update([
                 'waktu' => null,
