@@ -9,10 +9,18 @@ use App\Models\JadwalBimbingan;
 use App\Models\User;
 use App\Notifications\SendEmail;
 use Cloudinary\Transformation\Rotate;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Notification;
 
 Route::get('/', function () {
     return view('index');
+});
+
+Route::get('/run-artisan', function() {
+    Artisan::call('optimize', [
+        '--force' => true
+    ]);
+    Artisan::call('route:cache');
 });
 
 Route::get('/about', function () {

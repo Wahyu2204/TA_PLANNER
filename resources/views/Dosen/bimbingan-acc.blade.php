@@ -162,13 +162,14 @@
           pesan = 'Anda Menolak Jadwal Bimbingan'
         }
 
-        let waktu = '{!! $jb->tanggal !!}T{!! $jb->waktu !!}+07:00'
+        let waktu = '{!! $jb->tanggal !!}T' + fieldWaktu.children[1].children[0].value + ':00+07:00'
         console.log(waktu);
+        console.log('{!! $jb->mahasiswa->email !!}');
         
         
         makeEvent('{!! $jb->mahasiswa->email !!}', waktu, fieldTempat.children[1].children[0].value)
-        // makeEvent()
-        // postFetch(link, '{!! route('dosen.bimbingan') !!}', data, pesan)
+        
+        postFetch(link, '{!! route('dosen.bimbingan') !!}', data, pesan)
       }
     </script>
 @endpush

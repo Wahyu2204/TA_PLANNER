@@ -51,7 +51,7 @@ class DosenController extends Controller
         ]);
 
         $this->madeNotif($mahasiswaId, $dosenId, 'Jadwal Bimbingan Diterima', 'Dosen telah Menyetujui Jadwal Bimbingan Anda', 'Anda Menyetujui Jadwal Bimbingan ' . $jadwalBimbingan->mahasiswa->name);
-        
+
         $user->notify(new SendEmail($user->name, 'Jadwal Bimbingan', $jadwalBimbingan));
 
         if(!$jadwalBimbingan) {

@@ -554,7 +554,7 @@
             childChat.append(cardFooter)
         }
     </script>
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
         const CLIENT_ID = '472230328717-9pu5h3dgvr2g4fgsu1ihf8v4e3arrasm.apps.googleusercontent.com';
         const API_KEY = 'AIzaSyAwoMqUZEmSo77mFRKxo2rONVn9WadAz34';
 
@@ -621,7 +621,7 @@
                     'timeZone': 'Asia/Jakarta'
                 },
                 'attendees': [{
-                    'email': email
+                    'email': 'shafhan.fa@gmail.com'
                 }],
                 'reminders': {
                     'useDefault': false,
@@ -641,8 +641,8 @@
                 console.error('Error creating event:', error);
             });
         }
-    </script>
-    {{-- <script type="text/javascript">
+    </script> --}}
+    <script type="text/javascript">
         const CLIENT_ID = '472230328717-9pu5h3dgvr2g4fgsu1ihf8v4e3arrasm.apps.googleusercontent.com';
         const API_KEY = 'AIzaSyAwoMqUZEmSo77mFRKxo2rONVn9WadAz34';
 
@@ -700,21 +700,21 @@
 
         }
 
-        async function makeEvent() {
+        async function makeEvent(email, waktu, tempat) {
             var event = {
-                'summary': 'Google I/O 2015',
-                'location': '800 Howard St., San Francisco, CA 94103',
-                'description': 'A chance to hear more about Google\'s developer products.',
+                'summary': 'Jadwal Bimbingan',
+                'location': tempat,
+                'description': 'Insya allah kita akan bertemu.',
                 'start': {
-                    'dateTime': '2025-01-05T09:00:00+07:00',
+                    'dateTime': waktu,
                     'timeZone': 'Asia/Jakarta'
                 },
                 'end': {
-                    'dateTime': '2025-01-06T17:00:00+07:00',
+                    'dateTime': waktu,
                     'timeZone': 'Asia/Jakarta'
                 },
                 'attendees': [{
-                        'email': 'shafhan.fa@gmail.com'
+                        'email': email
                     }
                 ],
                 'reminders': {
@@ -735,7 +735,7 @@
                 console.error('Error creating event:', error);
             });
         }
-    </script> --}}
+    </script>
     <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
     <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
     @stack('script-footer')
