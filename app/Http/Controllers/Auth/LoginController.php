@@ -17,7 +17,7 @@ class LoginController extends Controller
 
     public function showLoginDosenForm()
     {
-        return view('auth.logindosen'); // Pastikan file `logindosen.blade.php` ada.
+        return view('auth.logindosen');
     }
 
     public function login(Request $request)
