@@ -10,16 +10,6 @@ use App\Models\User;
 
 class LoginController extends Controller
 {
-    public function showLoginForm()
-    {
-        return view('auth.loginmahasiswa');
-    }
-
-    public function showLoginDosenForm()
-    {
-        return view('auth.logindosen');
-    }
-
     public function login(Request $request)
     {
         $request->validate([
@@ -29,32 +19,27 @@ class LoginController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if ($user && Hash::check($request->password, $user->password)) {
-            Auth::login($user);
-
-            if ($user->role === 'mahasiswa') {
-                return redirect()->route('mahasiswa.dashboard');
-            } elseif ($user->role === 'dosen') {
-                return redirect()->route('dosen.dashboard');
-            }
-        }
-
-        return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->withInput($request->only('email'));
-    }
-
-    public function logout()
-    {
-        if(Auth::logout()) {
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
-                'message' => 'Gagal!' 
-            ],400);
+                'message' => 'Email atau password salah.'
+            ], 401);
         }
+
+        $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'message' => 'Berhasil!'
+            'message' => 'Berhasil!',
+            'token' => $token,
+            'user' => $user
         ], 200);
+    }
 
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'message' => 'Berhasil logout!'
+        ], 200);
     }
 }

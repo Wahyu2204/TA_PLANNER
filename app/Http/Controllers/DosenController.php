@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Notifications\SendEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 
 class DosenController extends Controller
 {
@@ -15,58 +14,52 @@ class DosenController extends Controller
     {
         $jumlahAntrean = JadwalBimbingan::where('diterima', 0)->count();
         $jumlahMahasiswa = User::find(Auth::user()->id)->relatedMahasiswa->count();
-        
-        return view('dosen.dashboard', [
-            'ja' => $jumlahAntrean,
-            'jm' => $jumlahMahasiswa
-        ]);
+
+        return response()->json([
+            'message' => 'Berhasil!',
+            'data' => [
+                'jumlah_antrean' => $jumlahAntrean,
+                'jumlah_mahasiswa' => $jumlahMahasiswa
+            ]
+        ], 200);
     }
 
     public function bimbingan()
     {
-        $jadwalBimbingan = JadwalBimbingan::where('selesai', 0)->get();
-        return view('dosen.bimbingan', ['jadwalBimbingan' => $jadwalBimbingan]);
+        $jadwalBimbingan = JadwalBimbingan::where('selesai', 0)
+            ->with(['mahasiswa', 'dosen'])
+            ->get();
+
+        return response()->json([
+            'message' => 'Berhasil!',
+            'data' => $jadwalBimbingan
+        ], 200);
     }
 
     public function bimbinganAcc($id)
     {
-        $jadwalBimbingan = JadwalBimbingan::find($id);
-        return view('dosen.bimbingan-acc', ['jb' => $jadwalBimbingan]);
+        $jadwalBimbingan = JadwalBimbingan::with(['mahasiswa', 'dosen'])->find($id);
+
+        return response()->json([
+            'message' => 'Berhasil!',
+            'data' => $jadwalBimbingan
+        ], 200);
     }
 
     public function bimbinganAccTerima(Request $request, $id)
     {
-        $waktu = $request->waktu;
-        $tempat = $request->tempat;
-        $mahasiswaId = $request->mahasiswa_id;
-        $dosenId = $request->dosen_id;
-
-        $user = User::find($mahasiswaId);
         $jadwalBimbingan = JadwalBimbingan::find($id);
 
         $jadwalBimbingan->update([
-            'waktu' => $waktu,
-            'tempat' => $tempat,
+            'waktu' => $request->waktu,
+            'tempat' => $request->tempat,
             'diterima' => 1
         ]);
 
-        $this->madeNotif($mahasiswaId, $dosenId, 'Jadwal Bimbingan Diterima', 'Dosen telah Menyetujui Jadwal Bimbingan Anda', 'Anda Menyetujui Jadwal Bimbingan ' . $jadwalBimbingan->mahasiswa->name);
+        $this->madeNotif($request->mahasiswa_id, $request->dosen_id, 'Jadwal Bimbingan Diterima', 'Dosen telah Menyetujui Jadwal Bimbingan Anda', 'Anda Menyetujui Jadwal Bimbingan ' . $jadwalBimbingan->mahasiswa->name);
 
+        $user = User::find($request->mahasiswa_id);
         $user->notify(new SendEmail($user->name, 'Jadwal Bimbingan', $jadwalBimbingan));
-
-        if(!$jadwalBimbingan) {
-            $jadwalBimbingan->update([
-                'waktu' => null,
-                'tempat' => null,
-                'diterima' => 0
-            ]);
-
-            $this->deleteNotif($mahasiswaId, $dosenId);
-
-            return response()->json([
-                'message' => 'Terjadi Kesalahan Dalam Pengiriman Data'
-            ], 400);
-        }
 
         return response()->json([
             'message' => 'Berhasil!'
@@ -75,35 +68,15 @@ class DosenController extends Controller
 
     public function bimbinganAccTolak(Request $request, $id)
     {
-        $alasan = $request->alasan;
-        $hariPilihanDosen = $request->hariPilihanDosen;
-        $mahasiswaId = $request->mahasiswa_id;
-        $dosenId = $request->dosen_id;
-
         $jadwalBimbingan = JadwalBimbingan::find($id);
 
         $jadwalBimbingan->update([
-            'alasan' => $alasan,
-            'hari_pilihan_dosen' => $hariPilihanDosen,
+            'alasan' => $request->alasan,
+            'hari_pilihan_dosen' => $request->hariPilihanDosen,
             'ditolak' => 1
         ]);
 
-        
-        $this->madeNotif($mahasiswaId, $dosenId, 'Jadwal Bimbingan Ditolak', 'Jadwal Bimbingan Anda Ditolak Oleh Dosen', 'Anda Menolak Jadwal Bimbingan Mahasiswa ' . $jadwalBimbingan->mahasiswa->name);
-
-        if(!$jadwalBimbingan) {
-            $jadwalBimbingan->update([
-                'alasan' => $alasan,
-                'hari_pilihan_dosen' => $hariPilihanDosen,
-                'ditolak' => 1
-            ]);
-
-            $this->deleteNotif($mahasiswaId, $dosenId);
-
-            return response()->json([
-                'message' => 'Terjadi Kesalahan Dalam Pengiriman Data'
-            ], 400);
-        }
+        $this->madeNotif($request->mahasiswa_id, $request->dosen_id, 'Jadwal Bimbingan Ditolak', 'Jadwal Bimbingan Anda Ditolak Oleh Dosen', 'Anda Menolak Jadwal Bimbingan Mahasiswa ' . $jadwalBimbingan->mahasiswa->name);
 
         return response()->json([
             'message' => 'Berhasil!'
@@ -112,49 +85,46 @@ class DosenController extends Controller
 
     public function riwayatBimbingan()
     {
-        $jadwalBimbingan = JadwalBimbingan::where('selesai', 1)->get();
-        return view('dosen.riwayat-bimbingan', ['jadwalBimbingan' => $jadwalBimbingan]);
+        $jadwalBimbingan = JadwalBimbingan::where('selesai', 1)
+            ->with(['mahasiswa', 'dosen'])
+            ->get();
+
+        return response()->json([
+            'message' => 'Berhasil!',
+            'data' => $jadwalBimbingan
+        ], 200);
     }
 
     public function riwayatBimbinganDetail($id)
     {
-        $jadwalBimbingan = JadwalBimbingan::find($id);
-        return view('dosen.riwayat-bimbingan-detail', ['jadwalBimbingan' => $jadwalBimbingan]);
+        $jadwalBimbingan = JadwalBimbingan::with(['mahasiswa', 'dosen'])->find($id);
+
+        return response()->json([
+            'message' => 'Berhasil!',
+            'data' => $jadwalBimbingan
+        ], 200);
     }
 
     public function umpanBalik($id)
     {
-        $jadwalBimbingan = JadwalBimbingan::find($id);
+        $jadwalBimbingan = JadwalBimbingan::with(['mahasiswa', 'dosen'])->find($id);
 
-        return view('dosen.umpan-balik', ['jb' => $jadwalBimbingan]);
+        return response()->json([
+            'message' => 'Berhasil!',
+            'data' => $jadwalBimbingan
+        ], 200);
     }
 
-    public function kirimUmpanBalik(Request $request, $id) {
-        $umpanBalik = $request->umpan_balik;
-        $mahasiswaId = $request->mahasiswa_id;
-        $dosenId = $request->dosen_id;
-
+    public function kirimUmpanBalik(Request $request, $id)
+    {
         $jadwalBimbingan = JadwalBimbingan::find($id);
 
         $jadwalBimbingan->update([
-            'umpan_balik' => $umpanBalik,
+            'umpan_balik' => $request->umpan_balik,
             'selesai' => 1
         ]);
 
-        $this->madeNotif($mahasiswaId, $dosenId, 'Umpan Balik', 'Dosen telah Mengirim Umpan Balik', 'Anda Mengirim Umpan Balik Kepada Mahasiswa ' . $jadwalBimbingan->mahasiswa->name);
-        
-        if(!$jadwalBimbingan) {
-            $jadwalBimbingan->update([
-                'umpan_balik' => null,
-                'selesai' => 1
-            ]);
-
-            $this->deleteNotif($mahasiswaId, $dosenId);
-
-            return response()->json([
-                'message' => 'Terjadi Kesalahan Dalam Pengiriman Data'
-            ], 400);
-        }
+        $this->madeNotif($request->mahasiswa_id, $request->dosen_id, 'Umpan Balik', 'Dosen telah Mengirim Umpan Balik', 'Anda Mengirim Umpan Balik Kepada Mahasiswa ' . $jadwalBimbingan->mahasiswa->name);
 
         return response()->json([
             'message' => 'Berhasil!'
@@ -166,12 +136,13 @@ class DosenController extends Controller
         $allUser = User::find($id)->relatedMahasiswa;
 
         $users = [];
-
         foreach ($allUser as $value) {
-            $user = User::where('id', $value->id)->get()[0];
-
-            // array_push($users, [$user->name, $user->photo_profile]);
-            $users[] = [$user->name, $user->photo_profile, $user->id];
+            $user = User::find($value->id);
+            $users[] = [
+                'name' => $user->name,
+                'photo_profile' => $user->photo_profile,
+                'id' => $user->id
+            ];
         }
 
         return response()->json([

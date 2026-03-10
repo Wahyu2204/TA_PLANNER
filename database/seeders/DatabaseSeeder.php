@@ -42,36 +42,10 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('n'),
             'role' => 'dosen'
         ]);
-        
-        // JadwalBimbingan::create([
-        //     'mahasiswa_id' => 1,
-        //     'dosen_id' => 2,
-        //     'alasan' => 'Malas',
-        //     'hari_pilihan_dosen' => date('Y-m-d', strtotime('02-01-2025')),
-        //     'ditolak' => 1
-        // ]);
-
 
         MahasiswaDosen::create([
             'mahasiswa_id' => 1,
             'dosen_id' => 2
         ]);
-
-        // Pesan::create([
-        //     'dari' => 1,
-        //     'ke' => 2,
-        //     'pesan' => 'kamu jawa ya?'
-        // ]);
-
-        // Pesan::create([
-        //     'dari' => 2,
-        //     'ke' => 1,
-        //     'pesan' => 'iya saya dari jawa'
-        // ]);
-
-
-        // $this->call([
-        //     JadwalBimbinganSeeder::class
-        // ]);
     }
 }
