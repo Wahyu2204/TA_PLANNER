@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\JadwalBimbingan;
-use App\Models\Notifikasi;
-use App\Models\Pesan;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -12,14 +10,19 @@ class MahasiswaController extends Controller
 {
     public function dashboard()
     {
-        return view('mahasiswa.dashboard');
+        return response()->json([
+            'message' => 'Berhasil!',
+        ], 200);
     }
 
     public function jadwalBimbingan()
     {
         $jadwalBimbingan = JadwalBimbingan::where('selesai', 0)->first();
 
-        return view('mahasiswa.jadwal-bimbingan', ['jb' => $jadwalBimbingan]);
+        return response()->json([
+            'message' => 'Berhasil!',
+            'data' => $jadwalBimbingan
+        ], 200);
     }
 
     public function buatJadwalBimbingan(Request $request)
@@ -40,7 +43,6 @@ class MahasiswaController extends Controller
 
             if (!$jadwalBimbingan) {
                 $jadwalBimbingan->delete();
-
                 $this->deleteNotif($mahasiswaId, $dosenId);
 
                 return response()->json([
@@ -97,18 +99,26 @@ class MahasiswaController extends Controller
 
         return response()->json([
             'message' => 'Berhasil!'
-        ]);
+        ], 200);
     }
 
     public function riwayatBimbingan()
     {
         $jadwalBimbingan = JadwalBimbingan::where('selesai', 1)->get();
-        return view('mahasiswa.riwayat-bimbingan', ['jadwalBimbingan' => $jadwalBimbingan]);
+
+        return response()->json([
+            'message' => 'Berhasil!',
+            'data' => $jadwalBimbingan
+        ], 200);
     }
 
     public function riwayatBimbinganDetail($id)
     {
         $jadwalBimbingan = JadwalBimbingan::find($id);
-        return view('mahasiswa.riwayat-bimbingan-detail', ['jadwalBimbingan' => $jadwalBimbingan]);
+
+        return response()->json([
+            'message' => 'Berhasil!',
+            'data' => $jadwalBimbingan
+        ], 200);
     }
 }
